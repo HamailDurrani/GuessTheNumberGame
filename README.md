@@ -16,5 +16,3 @@ The program picks a random number between 1 and 100, and you try to guess it wit
 4. Once you guess correctly, it tells you how many attempts it took.
 
 ---
-
-## 💻 Example Gameplay
