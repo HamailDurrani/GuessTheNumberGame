@@ -1,30 +1,73 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.11.35312.102
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuessTheNumber", "GuessTheNumber\GuessTheNumber.csproj", "{D4A79A3D-3321-46EC-9CE7-5169728A8807}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{799EBB97-5307-4FF4-B617-739ECC543D91}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D4A79A3D-3321-46EC-9CE7-5169728A8807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4A79A3D-3321-46EC-9CE7-5169728A8807}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D4A79A3D-3321-46EC-9CE7-5169728A8807}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D4A79A3D-3321-46EC-9CE7-5169728A8807}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D5478A40-D628-4635-BBBE-0CCC2F19DDF4}
-	EndGlobalSection
-EndGlobal
+﻿using System;
+
+namespace GuessTheNumber
+{
+    class Program {
+
+        static void Main(string[] args) 
+        { 
+            Console.Title = "Guess the Number Game";
+            Console.WriteLine("Welcome to Guess the Number Game");
+            Console.WriteLine("--------------------------------");
+
+            int min = 1; 
+            int max = 100;
+
+            Random random = new Random();
+            int secretNumber = random.Next(min, max + 1);
+
+            int attempts = 0;
+            bool correct = false;
+
+            Console.WriteLine($"I'm thinking of a number between {min} and {max}...");
+            Console.WriteLine("Try to guess it! \n");
+
+            while (!correct)
+            {
+                Console.WriteLine("Enter your guess: ");
+                string input = Console.ReadLine();
+                int guess;
+
+                if (!int.TryParse(input, out guess))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Please enter a valid number! \n");
+                    Console.ResetColor();
+                    continue;
+                }
+                if (guess < min || guess > max)
+                {
+                    Console.ForegroundColor= ConsoleColor.Yellow;
+                    Console.WriteLine($"Please guess within the range ({min}-{max}). \n");
+                    Console.ResetColor();
+                    continue;
+                }
+                attempts++;
+
+                if (guess < secretNumber)
+                {
+                    Console.ForegroundColor=(ConsoleColor) ConsoleColor.Cyan;
+                    Console.WriteLine("Too low! Try a higher number. \n");
+                }
+                else if (guess > secretNumber)
+                {
+                    Console.ForegroundColor =(ConsoleColor) ConsoleColor.Blue;
+                    Console.WriteLine("Too high! Try a lower number. \n");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Correct! You guessed the number in {attempts} attempts. \n");
+                    correct = true;
+                    
+                }
+
+                Console.ResetColor ();
+            }
+            Console.WriteLine("Thanks for playing! Press any key to exit.");
+            Console.ReadKey();
+        }
+    }
+}
+
+
